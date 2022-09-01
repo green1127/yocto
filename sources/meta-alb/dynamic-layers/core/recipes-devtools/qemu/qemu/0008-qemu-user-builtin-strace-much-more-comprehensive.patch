@@ -1,0 +1,216 @@
+From 53ca48a9d0b5bd7f35e34327cd97bbc91e3481fb Mon Sep 17 00:00:00 2001
+From: Ionut Vicovan <Ionut.Vicovan@nxp.com>
+Date: Tue, 15 Dec 2020 14:20:13 +0200
+Subject: [PATCH 8/9] qemu-user: builtin strace much more comprehensive
+
+This could be considered cosmetic but was invaluable in debugging
+other issues. A good number of syscalls was dumped in a confusing
+way. And for execve, the output of any successful execution did
+not even show at all.
+
+Signed-off-by: Heinz Wrobel <Heinz.Wrobel@nxp.com>
+Signed-off-by: Ionut Vicovan <Ionut.Vicovan@nxp.com>
+---
+ linux-user/strace.c    | 38 ++++++++++++++++++++++++++++++++++++--
+ linux-user/strace.list | 26 +++++++++++++-------------
+ 2 files changed, 49 insertions(+), 15 deletions(-)
+
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 13981341..83708728 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -144,8 +144,10 @@ print_signal(abi_ulong arg, int last)
+     case TARGET_SIGCHLD: signal_name = "SIGCHLD"; break;
+     case TARGET_SIGCONT: signal_name = "SIGCONT"; break;
+     case TARGET_SIGSTOP: signal_name = "SIGSTOP"; break;
++    case TARGET_SIGTSTP: signal_name = "SIGTSTP"; break;
+     case TARGET_SIGTTIN: signal_name = "SIGTTIN"; break;
+     case TARGET_SIGTTOU: signal_name = "SIGTTOU"; break;
++    case TARGET_SIGWINCH: signal_name = "SIGWINCH"; break;
+     }
+     if (signal_name == NULL) {
+         print_raw_param("%ld", arg, last);
+@@ -692,7 +694,7 @@ print_execve(const struct syscallname *name,
+         }
+     }
+ 
+-    qemu_log("NULL})");
++    qemu_log("NULL})...\n");
+ }
+ 
+ #ifdef TARGET_NR_ipc
+@@ -1251,6 +1253,7 @@ print_file_mode(abi_long mode, int last)
+ {
+     const char *sep = "";
+     const struct flags *m;
++    const abi_long origmode = mode;
+ 
+     for (m = &mode_flags[0]; m->f_string != NULL; m++) {
+         if ((m->f_value & mode) == m->f_value) {
+@@ -1263,7 +1266,7 @@ print_file_mode(abi_long mode, int last)
+ 
+     mode &= ~S_IFMT;
+     /* print rest of the mode as octal */
+-    if (mode != 0)
++    if (mode != 0 || !origmode)
+         qemu_log("%s%#o", sep, (unsigned int)mode);
+ 
+     qemu_log("%s", get_comma(last));
+@@ -2920,6 +2923,23 @@ print_mmap(const struct syscallname *name,
+ #define print_mmap2     print_mmap
+ #endif
+ 
++#if defined(TARGET_NR_mremap)
++static void
++print_mremap(const struct syscallname *name,
++    abi_long arg0, abi_long arg1, abi_long arg2,
++    abi_long arg3, abi_long arg4, abi_long arg5)
++{
++    print_syscall_prologue(name);
++    print_pointer(arg0, 0);
++    print_raw_param("%d", arg1, 0);
++    print_pointer(arg2, 0);
++    print_raw_param("%d", arg3, 0);
++    print_raw_param("%d", arg4, 0);
++    print_raw_param("%#x", arg5, 1);
++    print_syscall_epilogue(name);
++}
++#endif
++
+ #ifdef TARGET_NR_mprotect
+ static void
+ print_mprotect(const struct syscallname *name,
+@@ -3044,6 +3064,20 @@ print_tgkill(const struct syscallname *name,
+ }
+ #endif
+ 
++#ifdef TARGET_NR_seccomp
++static void
++print_seccomp(const struct syscallname *name,
++    abi_long arg0, abi_long arg1, abi_long arg2,
++    abi_long arg3, abi_long arg4, abi_long arg5)
++{
++    print_syscall_prologue(name);
++    print_raw_param("%d", arg0, 0);
++    print_raw_param("%d", arg1, 0);
++    print_pointer(arg2, 1);
++    print_syscall_epilogue(name);
++}
++#endif
++
+ #ifdef TARGET_NR_statx
+ static void
+ print_statx(const struct syscallname *name,
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index a04706a5..4af4af74 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -122,7 +122,7 @@
+ { TARGET_NR_dup2, "dup2" , "%s(%d,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_dup3
+-{ TARGET_NR_dup3, "dup3" , "%s(%d,%d,%d)", NULL, NULL },
++{ TARGET_NR_dup3, "dup3" , "%s(%d,%d,%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_epoll_create
+ { TARGET_NR_epoll_create, "epoll_create", "%s(%d)", NULL, NULL },
+@@ -276,10 +276,10 @@
+ { TARGET_NR_getcwd, "getcwd" , "%s(%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getdents
+-{ TARGET_NR_getdents, "getdents" , NULL, NULL, NULL },
++{ TARGET_NR_getdents, "getdents" , "%s(%d,%#x,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getdents64
+-{ TARGET_NR_getdents64, "getdents64" , NULL, NULL, NULL },
++{ TARGET_NR_getdents64, "getdents64" , "%s(%d,%#x,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getdomainname
+ { TARGET_NR_getdomainname, "getdomainname" , NULL, NULL, NULL },
+@@ -291,19 +291,19 @@
+ { TARGET_NR_getegid, "getegid" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getegid32
+-{ TARGET_NR_getegid32, "getegid32" , NULL, NULL, NULL },
++{ TARGET_NR_getegid32, "getegid32" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_geteuid
+ { TARGET_NR_geteuid, "geteuid" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_geteuid32
+-{ TARGET_NR_geteuid32, "geteuid32" , NULL, NULL, NULL },
++{ TARGET_NR_geteuid32, "geteuid32" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getgid
+ { TARGET_NR_getgid, "getgid" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getgid32
+-{ TARGET_NR_getgid32, "getgid32" , NULL, NULL, NULL },
++{ TARGET_NR_getgid32, "getgid32" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getgroups
+ { TARGET_NR_getgroups, "getgroups" , NULL, NULL, NULL },
+@@ -388,13 +388,13 @@
+ { TARGET_NR_gettid, "gettid" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_gettimeofday
+-{ TARGET_NR_gettimeofday, "gettimeofday" , NULL, NULL, NULL },
++{ TARGET_NR_gettimeofday, "gettimeofday" , "%s(%#x,%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getuid
+ { TARGET_NR_getuid, "getuid" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getuid32
+-{ TARGET_NR_getuid32, "getuid32" , NULL, NULL, NULL },
++{ TARGET_NR_getuid32, "getuid32" , "%s()", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_getxattr
+ { TARGET_NR_getxattr, "getxattr" , NULL, print_getxattr, NULL },
+@@ -616,7 +616,7 @@
+ { TARGET_NR_mq_unlink, "mq_unlink" , NULL, print_mq_unlink, NULL },
+ #endif
+ #ifdef TARGET_NR_mremap
+-{ TARGET_NR_mremap, "mremap" , NULL, NULL, NULL },
++{ TARGET_NR_mremap, "mremap" , NULL, print_mremap, print_syscall_ret_addr },
+ #endif
+ #ifdef TARGET_NR_msgctl
+ { TARGET_NR_msgctl, "msgctl" , NULL, NULL, NULL },
+@@ -1063,7 +1063,7 @@
+ { TARGET_NR_profil, "profil" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_pselect6
+-{ TARGET_NR_pselect6, "pselect6" , NULL, NULL, NULL },
++{ TARGET_NR_pselect6, "pselect6" , "%s(%d,%#x,%#x,%#x,%#x,%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_ptrace
+ { TARGET_NR_ptrace, "ptrace" , NULL, NULL, NULL },
+@@ -1219,7 +1219,7 @@
+ { TARGET_NR_sched_yield, "sched_yield" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_seccomp
+-{ TARGET_NR_seccomp, "seccomp" , NULL, NULL, NULL },
++{ TARGET_NR_seccomp, "seccomp" , NULL, print_seccomp, NULL },
+ #endif
+ #ifdef TARGET_NR_security
+ { TARGET_NR_security, "security" , NULL, NULL, NULL },
+@@ -1625,7 +1625,7 @@
+ { TARGET_NR_vserver, "vserver" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_wait4
+-{ TARGET_NR_wait4, "wait4" , NULL, NULL, NULL },
++{ TARGET_NR_wait4, "wait4" , "%s(%d,%#x,%d,%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_waitid
+ { TARGET_NR_waitid, "waitid" , "%s(%#x,%d,%p,%#x)", NULL, NULL },
+@@ -1649,7 +1649,7 @@
+ { TARGET_NR_sync_file_range2, "sync_file_range2", NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_pipe2
+-{ TARGET_NR_pipe2, "pipe2", NULL, NULL, NULL },
++{ TARGET_NR_pipe2, "pipe2", "%s(%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_atomic_cmpxchg_32
+ { TARGET_NR_atomic_cmpxchg_32, "atomic_cmpxchg_32", NULL, NULL, NULL },
+-- 
+2.17.1
+
