@@ -10,8 +10,10 @@ SCMVERSION ?= "y"
 LOCALVERSION = ""
 DELTA_KERNEL_DEFCONFIG ?= ""
 
-URL ?= "git://source.codeaurora.cn/external/autobsps32/linux;protocol=https"
-BRANCH ??= "${RELEASE_BASE}-${PV}-rt"
+# URL ?= "git://source.codeaurora.cn/external/autobsps32/linux;protocol=https"
+URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/linux.git;protocol=ssh"
+# BRANCH ??= "${RELEASE_BASE}-${PV}-rt"
+BRANCH ??= "dev"
 SRC_URI = "${URL};branch=${BRANCH}"
 
 DEPENDS_append = " libgcc dtc-native"
