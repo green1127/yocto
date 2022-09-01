@@ -12,7 +12,7 @@ B = "${S}"
 ACE_TAO_ARCHIVE = "ACE+TAO-2.2a_with_latest_patches_NO_makefiles.tar.gz"
 
 DDS_SRC_BRANCH ?= "master"
-SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH} \
+SRC_URI = "git://gitee.com/bitbake/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH} \
 		http://download.ociweb.com/TAO-2.2a/${ACE_TAO_ARCHIVE} \
 		"
 SRC_URI[sha256sum] = "a7c1f2a758bd851344812f45ab69aabcb83644ade2d2c8b9863d3b343d732817"

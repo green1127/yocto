@@ -1,6 +1,6 @@
 require recipes-bsp/u-boot/u-boot-nxp.inc
 
-URL ?= "git://source.codeaurora.org/external/autobsps32/u-boot;protocol=https"
+URL ?= "git://source.codeaurora.cn/external/autobsps32/u-boot;protocol=https"
 BRANCH ?= "${RELEASE_BASE}-${PV}"
 SRC_URI_prepend = "${URL};branch=${BRANCH}"
 

@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE-BSD3.txt;md5=bc7033361a6aa05f0fd2c1690eb81fd1
 
 PR = "r0"
 
-URL ?= "git://source.codeaurora.org/external/autobsps32/extra/pfeng;protocol=https"
+URL ?= "git://source.codeaurora.cn/external/autobsps32/extra/pfeng;protocol=https"
 SRC_URI = "${URL}"
 SRCREV = "e5747c79469580515871006c79719f506d828ebc"
 

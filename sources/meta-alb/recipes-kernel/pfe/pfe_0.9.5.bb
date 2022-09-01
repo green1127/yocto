@@ -14,7 +14,7 @@ NXP_FIRMWARE_LOCAL_DIR ?= "."
 PFE_FW_CLASS_BIN ?= "s32g_pfe_class.fw"
 PFE_FW_UTIL_BIN ?= "s32g_pfe_util.fw"
 
-URL ?= "git://source.codeaurora.org/external/autobsps32/extra/pfeng;protocol=https"
+URL ?= "git://source.codeaurora.cn/external/autobsps32/extra/pfeng;protocol=https"
 SRC_URI = "${URL} \
 	file://${NXP_FIRMWARE_LOCAL_DIR}/${PFE_FW_CLASS_BIN} \
 	file://${NXP_FIRMWARE_LOCAL_DIR}/${PFE_FW_UTIL_BIN} \
