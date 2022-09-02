@@ -1,12 +1,10 @@
 require recipes-bsp/u-boot/u-boot-nxp.inc
 
-URL ?= "git://source.codeaurora.cn/external/autobsps32/u-boot;protocol=https"
-BRANCH ?= "${RELEASE_BASE}-${PV}"
+# URL ?= "git://source.codeaurora.cn/external/autobsps32/u-boot;protocol=https"
+URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/u-boot.git;protocol=ssh"
+# BRANCH ?= "${RELEASE_BASE}-${PV}"
+BRANCH ??= "dev"
 SRC_URI_prepend = "${URL};branch=${BRANCH}"
 
-SRCREV = "7eba18e1c0b994180e173e9343c7fe50819d9732"
-
-# Support for generating default environment
-SRC_URI += " \
-    file://0001-env-Add-Makefile-rule-to-generate-default-environment-2019.04.patch \
-"
+# SRCREV = "7eba18e1c0b994180e173e9343c7fe50819d9732"
+SRCREV = "6939f922b891607727bbd4d1409ab604a3122bbd"
