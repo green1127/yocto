@@ -21,8 +21,13 @@ SYSTEMD_AUTO_ENABLE = "disable"
 SRC_URI = "http://w1.fi/releases/wpa_supplicant-${PV}.tar.gz  \
            file://defconfig \
            file://wpa-supplicant.sh \
+           file://route-default-gw.sh \
+           file://wifi-sta.sh \
+           file://wlan0-uptime-test.sh \
+           file://wpa_0_8.conf \
            file://wpa_supplicant.conf \
            file://wpa_supplicant.conf-sane \
+           file://8821cu.sh \ 
            file://99_wpa_supplicant \
            file://0001-replace-systemd-install-Alias-with-WantedBy.patch \
            file://0001-AP-Silently-ignore-management-frame-from-unexpected-.patch \
@@ -42,6 +47,13 @@ FILES_wpa-supplicant-passphrase = "${bindir}/wpa_passphrase"
 FILES_wpa-supplicant-cli = "${sbindir}/wpa_cli"
 FILES_${PN} += "${datadir}/dbus-1/system-services/* ${systemd_system_unitdir}/*"
 CONFFILES_${PN} += "${sysconfdir}/wpa_supplicant.conf"
+
+inherit update-rc.d
+
+INITSCRIPT_NAME = "8821cu.sh"
+INITSCRIPT_PARAMS = "start 99 S ."
+RDEPENDS_${PN} = "initscripts"
+CONFFILES_${PN} += "${sysconfdir}/init.d/8821cu.sh"
 
 do_configure () {
 	${MAKE} -C wpa_supplicant clean
@@ -79,6 +91,21 @@ do_install () {
 
 	install -d ${D}${docdir}/wpa_supplicant
 	install -m 644 wpa_supplicant/README ${WORKDIR}/wpa_supplicant.conf ${D}${docdir}/wpa_supplicant
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/8821cu.sh ${D}${sysconfdir}/init.d/8821cu.sh
+
+	install -d ${D}${sysconfdir}
+	install -m 600 ${WORKDIR}/wpa_0_8.conf ${D}${sysconfdir}/wpa_0_8.conf
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/wifi-sta.sh ${D}${sysconfdir}/init.d/wifi-sta.sh
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/wlan0-uptime-test.sh ${D}${sysconfdir}/init.d/wlan0-uptime-test.sh	
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/route-default-gw.sh ${D}${sysconfdir}/init.d/route-default-gw.sh	
 
 	install -d ${D}${sysconfdir}
 	install -m 600 ${WORKDIR}/wpa_supplicant.conf-sane ${D}${sysconfdir}/wpa_supplicant.conf

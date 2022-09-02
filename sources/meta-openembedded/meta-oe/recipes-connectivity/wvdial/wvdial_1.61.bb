@@ -4,12 +4,20 @@ DESCRIPTION = "WvDial is a program that makes it easy to connect your Linux work
 LICENSE = "LGPLv2"
 LIC_FILES_CHKSUM = "file://COPYING.LIB;md5=55ca817ccb7d5b5b66355690e9abc605"
 
-inherit pkgconfig
+inherit pkgconfig update-rc.d
+
+INITSCRIPT_NAME = "me909s.sh"
+INITSCRIPT_PARAMS = "start 99 S ."
+RDEPENDS_${PN} = "initscripts"
+CONFFILES_${PN} += "${sysconfdir}/init.d/me909s.sh"
 
 DEPENDS = "wvstreams"
 RDEPENDS_${PN} = "ppp"
 
 SRC_URI = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${BPN}/${BP}.tar.bz2 \
+           file://me909s.sh \
+           file://ppp0-uptime-test.sh \
+           file://wvdial.conf \
            file://typo_pon.wvdial.1.patch \
            file://musl-support.patch \
           "
@@ -27,5 +35,14 @@ do_configure() {
 }
 
 do_install() {
+    install -d ${D}${sysconfdir}
+    install -m 644 ${WORKDIR}/wvdial.conf ${D}${sysconfdir}/
+
+    install -d ${D}${sysconfdir}/init.d
+    install -m 755 ${WORKDIR}/me909s.sh ${D}${sysconfdir}/init.d/me909s.sh
+
+    install -d ${D}${sysconfdir}/init.d
+    install -m 755 ${WORKDIR}/ppp0-uptime-test.sh ${D}${sysconfdir}/init.d/ppp0-uptime-test.sh    
+
     oe_runmake prefix=${D}/usr PPPDIR=${D}/etc/ppp/peers install
 }

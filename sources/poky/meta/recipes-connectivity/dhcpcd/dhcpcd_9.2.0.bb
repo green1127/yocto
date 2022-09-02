@@ -15,6 +15,7 @@ SRC_URI = "https://roy.marples.name/downloads/${BPN}/${BPN}-${PV}.tar.xz \
            file://0001-remove-INCLUDEDIR-to-prevent-build-issues.patch \
            file://dhcpcd.service \
            file://dhcpcd@.service \
+           file://udhcpd.conf \
            "
 
 SRC_URI[sha256sum] = "fcb2d19672d445bbfd38678fdee4f556ef967a3ea6bd81092d10545df2cb9666"
@@ -51,6 +52,9 @@ do_install_append () {
 
     chmod 700 ${D}${localstatedir}/lib/${BPN}
     chown dhcpcd:dhcpcd ${D}${localstatedir}/lib/${BPN}
+
+    install -d ${D}${sysconfdir}
+    install -m 600 ${WORKDIR}/udhcpd.conf ${D}${sysconfdir}/udhcpd.conf
 }
 
 FILES_${PN}-dbg += "${libdir}/dhcpcd/dev/.debug"

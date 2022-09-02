@@ -12,6 +12,10 @@ SRC_URI = " \
     file://init \
     file://hostapd.service \
     file://CVE-2019-16275.patch \
+    file://iptables-forward.sh \
+    file://rtl_hostapd_2G.conf \
+    file://rtl_hostapd_5G.conf \
+    file://wifi-ap.sh \
 "
 
 SRC_URI[md5sum] = "f188fc53a495fe7af3b6d77d3c31dee8"
@@ -40,6 +44,18 @@ do_compile() {
 }
 
 do_install() {
+    install -d ${D}${sysconfdir}/init.d
+    install -m 755 ${WORKDIR}/iptables-forward.sh ${D}${sysconfdir}/init.d/iptables-forward.sh
+
+    install -d ${D}${sysconfdir}
+    install -m 600 ${WORKDIR}/rtl_hostapd_2G.conf ${D}${sysconfdir}/rtl_hostapd_2G.conf
+
+    install -d ${D}${sysconfdir}
+    install -m 600 ${WORKDIR}/rtl_hostapd_5G.conf ${D}${sysconfdir}/rtl_hostapd_5G.conf
+
+    install -d ${D}${sysconfdir}/init.d
+    install -m 755 ${WORKDIR}/wifi-ap.sh ${D}${sysconfdir}/init.d/wifi-ap.sh
+
     install -d ${D}${sbindir} ${D}${sysconfdir}/init.d ${D}${systemd_unitdir}/system/
     install -m 0644 ${B}/hostapd.conf ${D}${sysconfdir}
     install -m 0755 ${B}/hostapd ${D}${sbindir}
