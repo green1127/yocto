@@ -14,3 +14,4 @@ UBOOT_CONFIG[qspi] = "${UBOOT_FLASH_DEFCONFIG},,u-boot.${UBOOT_SUFFIX}"
 # Enable ATF
 require ${@bb.utils.contains('DISTRO_FEATURES', 'atf', 'conf/machine/include/atf.inc', '', d)}
 
+DISTRO_FEATURES_append = " pfe "
