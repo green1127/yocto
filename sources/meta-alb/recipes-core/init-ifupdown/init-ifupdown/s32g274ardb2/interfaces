@@ -5,9 +5,14 @@ auto lo
 iface lo inet loopback
 
 auto pfe0
-iface pfe0 inet dhcp
-pre-up [ -L /sys/class/net/pfe0 ]
-dhcpcd_opts -b
+iface pfe0 inet static
+address 192.168.10.23
+netmask 255.255.255.0
+broadcast 192.168.10.255
+gateway 192.168.10.1
+#iface pfe0 inet dhcp
+#pre-up [ -L /sys/class/net/pfe0 ]
+#dhcpcd_opts -b
 
 auto pfe1
 iface pfe1 inet dhcp
