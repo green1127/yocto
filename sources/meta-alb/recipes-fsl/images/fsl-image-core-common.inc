@@ -8,7 +8,6 @@ PACKAGES-CORE = "\
     dosfstools \
     sysfsutils \
     sysstat \
-    util-linux \
     gdbserver \
     nfs-utils \
     lrzsz \

@@ -9,3 +9,5 @@ tmpfs                /var/volatile        tmpfs      defaults              0  0
 # uncomment this if your device has a SD/MMC/Transflash slot
 #/dev/mmcblk0p1       /media/card          auto       defaults,sync,noauto  0  0
 
+/dev/nvme0n1p1          /ssdp0              auto       defaults,sync        0  0
+/dev/nvme0n1p2          /ssdp1              auto       defaults,sync         0  0

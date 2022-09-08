@@ -12,6 +12,9 @@ prevlevel=N
 umask 022
 export PATH runlevel prevlevel
 
+mkdir -p /ssdp0
+mkdir -p /ssdp1
+
 #	Make sure proc is mounted
 #
 [ -d "/proc/1" ] || mount /proc
