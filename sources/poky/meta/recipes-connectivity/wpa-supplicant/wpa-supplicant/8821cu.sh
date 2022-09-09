@@ -1,16 +1,16 @@
 #!/bin/sh
 echo "8821cu CHIP_EN"
 cd /sys/class/gpio/
-echo 20 > export
-cd gpio20
+echo 89 > export
+cd gpio89
 echo out > direction
 echo 0 > value
 echo 1 > value
 
 echo "8821cu WL_DIS"
 cd /sys/class/gpio/
-echo 89 > export
-cd gpio89
+echo 90 > export
+cd gpio90
 echo out > direction
 echo 0 > value
 echo 1 > value
