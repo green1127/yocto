@@ -38,6 +38,7 @@ do
 
             echo "wlan0 uptime: $uptime seconds" > /home/root/wlan0_uptime.log
 
+            # /etc/init.d/wifi-sta.sh -d
             # /etc/init.d/wifi-sta.sh -s testap &
             # /etc/init.d/wlan0-uptime-test.sh &
 
