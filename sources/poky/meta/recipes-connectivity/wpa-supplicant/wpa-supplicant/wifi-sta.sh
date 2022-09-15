@@ -72,3 +72,4 @@ fi
 
 wpa_cli -p/var/run/wpa_supplicant select_network 0
 udhcpc -i wlan0 -R
+/etc/init.d/route-default-gw.sh -i wlan0

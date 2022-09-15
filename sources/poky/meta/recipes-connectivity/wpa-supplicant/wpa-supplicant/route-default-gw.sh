@@ -30,8 +30,10 @@ if [ "$interface" = "ppp0" ]; then
 fi
 
 if [ "$interface" = "wlan0" ]; then
-    ifconfig $interface | awk '/[0-9]+\.[0-9]+\.[0-9]+\./ {print $2}' | xargs route del default gw
-    ifconfig $interface | awk '/[0-9]+\.[0-9]+\.[0-9]+\./ {print $2}' | xargs route add default gw
+    gateway=`route -n | grep wlan0 | head -1 | awk '/[0-9]+\.[0-9]+\.[0-9]+\./ {print $2}'`
+    # echo $gateway
+    route del default gw $gateway
+    route add default gw $gateway
     exit 0
 fi
 
