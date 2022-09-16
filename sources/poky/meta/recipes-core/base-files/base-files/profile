@@ -29,4 +29,7 @@ esac
 
 export PATH PS1 OPIEDIR QPEDIR QTDIR EDITOR TERM
 
+TZ=UTC-08:00
+export TZ
+
 umask 022
