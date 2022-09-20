@@ -13,6 +13,7 @@ umask 022
 export PATH runlevel prevlevel
 hwclock --hctosys --rtc=/dev/rtc1
 
+mkdir -p /data
 mkdir -p /ssdp0
 mkdir -p /ssdp1
 
