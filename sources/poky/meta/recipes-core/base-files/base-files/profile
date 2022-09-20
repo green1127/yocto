@@ -29,7 +29,8 @@ esac
 
 export PATH PS1 OPIEDIR QPEDIR QTDIR EDITOR TERM
 
-TZ=UTC-08:00
+# TZ=UTC-08:00
+TZ='Asia/Shanghai'
 export TZ
 
 umask 022

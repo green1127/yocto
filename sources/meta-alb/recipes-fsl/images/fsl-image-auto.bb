@@ -60,6 +60,9 @@ IMAGE_INSTALL_append = " iptables "
 # Speedtest CLI
 IMAGE_INSTALL_append = " speedtest-cli "
 
+# Timezone
+IMAGE_INSTALL_append = " tzcode tzdata "
+
 # Other useful tools
 IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
 
