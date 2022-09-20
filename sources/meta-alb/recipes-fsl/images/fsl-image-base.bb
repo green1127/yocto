@@ -37,6 +37,7 @@ IMAGE_INSTALL_append_s32g274ardb = " sja1105 "
 
 # Support for SJA1110 swich under Linux
 # IMAGE_INSTALL_append_s32g274ardb2 = " sja1110 "
+IMAGE_INSTALL_append_s32g274ardb2 = " sja1105 "
 
 # Support for STR (Suspend to RAM) -- rtcwake
 IMAGE_INSTALL_append_s32g2 = " util-linux-rtcwake "

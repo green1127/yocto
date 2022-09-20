@@ -6,10 +6,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 inherit module
 
-URL ?= "git://source.codeaurora.org/external/autobsps32/sja1105x;protocol=https"
-BRANCH ?= "${RELEASE_BASE}"
+# URL ?= "git://source.codeaurora.org/external/autobsps32/sja1105x;protocol=https"
+URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/sja1105x.git;protocol=ssh"
+# BRANCH ?= "${RELEASE_BASE}"
+BRANCH ??= "dev"
 SRC_URI = "${URL};branch=${BRANCH}"
-SRCREV = "573ecec64167cf01e4e8451734f92382952f772c"
+# SRCREV = "573ecec64167cf01e4e8451734f92382952f772c"
+SRCREV = "b1ce49965e4cfd2b227c7922aac4a703b36bfbb8"
 
 KERNEL_NAME = "${PREFERRED_PROVIDER_virtual/kernel}"
 KERNEL_VER = '${@d.getVar("PREFERRED_VERSION_${KERNEL_NAME}",True)}'
@@ -27,8 +30,9 @@ EXTRA_OEMAKE_append_s32v234evb = " MYPLATFORM=evb "
 EXTRA_OEMAKE_append_s32v234bbmini = " MYPLATFORM=bbmini "
 EXTRA_OEMAKE_append_s32g2evb = " MYPLATFORM=gplat "
 EXTRA_OEMAKE_append_s32g274ardb = " MYPLATFORM=rdb "
+EXTRA_OEMAKE_append_s32g274ardb2 = " MYPLATFORM=rdb "
 
-KERNEL_MODULE_AUTOLOAD += "sja1105pqrs"
+# KERNEL_MODULE_AUTOLOAD += "sja1105pqrs"
 
 FILES_${PN} += "${base_libdir}/*"
 FILES_${PN} += "${sysconfdir}/modules-load.d/*"
