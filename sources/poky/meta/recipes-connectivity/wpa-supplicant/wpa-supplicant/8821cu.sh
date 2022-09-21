@@ -1,4 +1,10 @@
 #!/bin/sh
+echo "enable gpio for pfe0"
+echo 23 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio23/direction
+echo 0 > /sys/class/gpio/gpio23/value
+echo 1 > /sys/class/gpio/gpio23/value
+
 echo "8821cu CHIP_EN"
 cd /sys/class/gpio/
 echo 89 > export
