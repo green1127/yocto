@@ -25,6 +25,7 @@ PACKAGES-CORE-ext2 = "\
     e2fsprogs-e2fsck \
     e2fsprogs-mke2fs \
     e2fsprogs-tune2fs \
+    e2fsprogs-resize2fs \
 "
 
 PACKAGES-CORE-MISC = "\

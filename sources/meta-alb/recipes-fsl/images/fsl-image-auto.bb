@@ -63,6 +63,9 @@ IMAGE_INSTALL_append = " speedtest-cli "
 # Timezone
 IMAGE_INSTALL_append = " tzcode tzdata "
 
+# Parted
+IMAGE_INSTALL_append = " parted "
+
 # Other useful tools
 IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
 

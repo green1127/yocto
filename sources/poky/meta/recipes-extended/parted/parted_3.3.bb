@@ -13,6 +13,8 @@ SRC_URI = "${GNU_MIRROR}/parted/parted-${PV}.tar.xz \
            file://run-ptest \
            file://0001-libparted-fs-add-sourcedir-lib-to-include-paths.patch \
            file://0002-tests-use-skip_-rather-than-skip_test_-which-is-unde.patch \
+           file://parted.conf \
+           file://parted.sh \
            "
 
 SRC_URI[md5sum] = "090655d05f3c471aa8e15a27536889ec"
@@ -27,8 +29,23 @@ PACKAGECONFIG[readline] = "--with-readline,--without-readline,readline"
 
 BBCLASSEXTEND = "native nativesdk"
 
+inherit update-rc.d
+
+INITSCRIPT_NAME = "parted.sh"
+INITSCRIPT_PARAMS = "start 49 S ."
+RDEPENDS_${PN} = "initscripts"
+CONFFILES_${PN} += "${sysconfdir}/init.d/parted.sh"
+
 do_compile_ptest() {
 	oe_runmake -C tests print-align print-max dup-clobber duplicate fs-resize print-flags
+}
+
+do_install_append() {
+	install -d ${D}${sysconfdir}
+	install -m 600 ${WORKDIR}/parted.conf ${D}${sysconfdir}/parted.conf
+
+	install -d ${D}${sysconfdir}/init.d
+	install -m 755 ${WORKDIR}/parted.sh ${D}${sysconfdir}/init.d/parted.sh
 }
 
 do_install_ptest() {
