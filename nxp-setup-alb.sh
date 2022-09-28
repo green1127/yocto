@@ -279,6 +279,7 @@ LAYER_LIST=" \
     meta-virtualization \
     meta-linaro/meta-optee \
     meta-security \
+    meta-application \
     \
     meta-freescale \
 "
