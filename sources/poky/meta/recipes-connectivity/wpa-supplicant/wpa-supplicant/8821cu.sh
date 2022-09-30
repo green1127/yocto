@@ -5,6 +5,10 @@ echo out > /sys/class/gpio/gpio23/direction
 echo 0 > /sys/class/gpio/gpio23/value
 echo 1 > /sys/class/gpio/gpio23/value
 
+echo "enable gpio for doip line"
+echo 39 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio39/direction
+
 echo "8821cu CHIP_EN"
 cd /sys/class/gpio/
 echo 89 > export

@@ -33,4 +33,5 @@ export PATH PS1 OPIEDIR QPEDIR QTDIR EDITOR TERM
 TZ='Asia/Shanghai'
 export TZ
 
+hwclock --systohc --localtime --rtc=/dev/rtc1
 umask 022
