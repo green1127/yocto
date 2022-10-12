@@ -10,6 +10,13 @@ include recipes-fsl/images/fsl-image-s32-common.inc
 COPY_LIC_MANIFEST = "1"
 COPY_LIC_DIRS = "1"
 
+inherit extrausers
+# openssl passwd <password>
+PASSWD = "dsHnoBTXAwgqY"
+EXTRA_USERS_PARAMS = "\
+    usermod -p '${PASSWD}' root; \
+    "
+
 IMAGE_INSTALL += " \
     kernel-devicetree \
     packagegroup-core-buildessential \
