@@ -12,7 +12,7 @@ URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/sja1105x.git;protocol=ssh"
 BRANCH ??= "dev"
 SRC_URI = "${URL};branch=${BRANCH}"
 # SRCREV = "573ecec64167cf01e4e8451734f92382952f772c"
-SRCREV = "b1ce49965e4cfd2b227c7922aac4a703b36bfbb8"
+SRCREV = "472b660fb728ecce06ac96af38a8adf2f5e38634"
 
 KERNEL_NAME = "${PREFERRED_PROVIDER_virtual/kernel}"
 KERNEL_VER = '${@d.getVar("PREFERRED_VERSION_${KERNEL_NAME}",True)}'
