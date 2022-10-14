@@ -7,4 +7,4 @@ BRANCH ??= "dev"
 SRC_URI_prepend = "${URL};branch=${BRANCH}"
 
 # SRCREV = "7eba18e1c0b994180e173e9343c7fe50819d9732"
-SRCREV = "8a66cf22eb599f0056b8059d1d54ae9c774dafd4"
+SRCREV = "9aa129009d3d7123b777dcda4fac79ad8fb1da99"
