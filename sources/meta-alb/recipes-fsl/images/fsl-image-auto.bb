@@ -79,6 +79,9 @@ IMAGE_INSTALL_append = " embus "
 # embusd
 IMAGE_INSTALL_append = " embusd "
 
+# ntfs-3g-ntfsprogs
+IMAGE_INSTALL_append += " ntfs-3g-ntfsprogs "
+
 # Other useful tools
 IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
 
