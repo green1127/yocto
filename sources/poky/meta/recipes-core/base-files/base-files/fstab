@@ -7,7 +7,7 @@ tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,stri
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # uncomment this if your device has a SD/MMC/Transflash slot
-/dev/mmcblk0p3       /data                auto       defaults,sync   0  0
+/dev/mmcblk0p3       /data                auto       defaults,sync         0  0
 
-/dev/nvme0n1p1          /ssdp0              auto       defaults,sync        0  0
-/dev/nvme0n1p2          /ssdp1              auto       defaults,sync         0  0
+/dev/nvme0n1p1       /ssdp0               ntfs-3g    defaults,sync         0  0
+/dev/nvme0n1p2       /ssdp1               auto       defaults,sync         0  0
