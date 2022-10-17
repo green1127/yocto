@@ -11,7 +11,7 @@ SRC_URI = "${URL};branch=${BRANCH} \
 
 SRCREV = "cc505c4ca7b21f5d7166d1f3b5bf752ff03e6b3e"
 
-DEPENDS = "zeromq jsoncpp spdlog "
+DEPENDS = "zeromq jsoncpp spdlog"
 
 S = "${WORKDIR}/git"
 
