@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/embusd.git;protocol=ssh"
 BRANCH ??= "dev"
 SRC_URI = "${URL};branch=${BRANCH} \
-           file://embusd.sh \
+           file://embusd.init \
 "
 
 SRCREV = "cc505c4ca7b21f5d7166d1f3b5bf752ff03e6b3e"
@@ -19,14 +19,12 @@ inherit cmake
 
 inherit update-rc.d
 
-INITSCRIPT_NAME = "embusd.sh"
-INITSCRIPT_PARAMS = "start 89 S ."
-RDEPENDS_${PN} = "initscripts"
-CONFFILES_${PN} += "${sysconfdir}/init.d/embusd.sh"
+INITSCRIPT_NAME = "embus"
+INITSCRIPT_PARAMS = "defaults 99"
 
 do_install_append () {
     install -d ${D}${sysconfdir}/init.d
-    install -m 755 ${WORKDIR}/embusd.sh ${D}${sysconfdir}/init.d/embusd.sh
+    install -m 0755 ${WORKDIR}/embusd.init ${D}${sysconfdir}/init.d/embus
 }
 
 FILES_${PN} += "/opt"

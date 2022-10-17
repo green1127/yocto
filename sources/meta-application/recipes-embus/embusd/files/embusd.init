@@ -1,0 +1,60 @@
+#!/bin/sh
+
+process_name="/opt/embus/bin/embusd"
+process_arg=" --config=/opt/embus/conf/embus.json"
+
+function status()
+{
+    procnumber=`ps -ef |grep -w $process_name|grep -v grep|wc -l`
+    if [ $procnumber -le 0 ];then
+       echo "embus is not running ..."
+       result=0
+    else
+       echo "embus is already running ..."
+       result=1
+    fi
+    #echo ${result}
+    return $result;
+}
+
+function start()
+{
+    status
+    if [ $result -ge 1 ];
+    then
+       return 0
+    fi
+    echo "start embus..."
+   # echo "nameserver 8.8.8.8" > /etc/resolv.conf
+    nohup $process_name $process_arg 2>&1 &
+    echo "start embus successful!"
+    return 0
+}
+
+# 添加停止命令
+function stop(){
+    echo "stop embus ..."
+
+    ps aux |grep $process_name |grep -v grep |awk '{print "kill -9 " $2}'|sh
+
+    echo "stop embus successful!"
+    return 0
+}
+
+case $1 in
+"status")
+    status
+    ;;
+"start")
+    start
+    ;;
+"stop")
+    stop
+    ;;
+"restart")
+    stop && start
+    ;;
+*)
+    echo "请输入: status, start, stop, restart"
+    ;;
+esac
