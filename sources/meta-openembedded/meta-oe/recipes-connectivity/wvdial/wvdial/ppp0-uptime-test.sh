@@ -19,6 +19,8 @@ do
             echo "uptime: $uptime"
 
             echo "ppp0 connected time: $uptime seconds" > /home/root/ppp0_connected_time.log
+            /etc/init.d/route-default-gw.sh -i ppp0
+
             exit 0
         fi
     fi
