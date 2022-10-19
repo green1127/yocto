@@ -8,7 +8,12 @@ if [ "$state" = "uninitionalized" ]; then
     parted -s /dev/mmcblk0 mkpart primary fat32 1222MB 100%
     mkdosfs /dev/mmcblk0p3
     mount /dev/mmcblk0p3 /data
+
+    # make part for SSD
+    umount /ssdp0
+    parted -s /dev/nvme0n1 mkpart primary ntfs 0 100%
     mkfs.ntfs -Q /dev/nvme0n1p1
+    mount.ntfs /dev/nvme0n1p1 /ssdp0
 
     echo "initionalized" > /etc/parted.conf
     exit 0
