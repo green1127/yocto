@@ -98,7 +98,7 @@ INITSCRIPT_NAME_${PN} = "vsftpd"
 INITSCRIPT_PARAMS_${PN} = "defaults 80"
 
 USERADD_PACKAGES = "${PN}"
-# openshh password ftp: K5ynzHHRH20no
+# openssl passwd <password>
 USERADD_PARAM_${PN} = "--system --home-dir /var/lib/ftp --no-create-home -g ftp \
                        --shell /bin/sh -p K5ynzHHRH20no ftp "
 GROUPADD_PARAM_${PN} = "-r ftp"
