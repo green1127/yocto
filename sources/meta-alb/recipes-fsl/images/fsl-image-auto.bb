@@ -47,40 +47,40 @@ IMAGE_INSTALL_append_s32 = "${@bb.utils.contains('DISTRO_FEATURES', 'lxc', ' ${L
 IMAGE_INSTALL_append_ls2 = " ${LXC_INSTALL_PACKAGES}"
 
 # SFTP server
-IMAGE_INSTALL_append = " openssh openssh-sftp openssh-sftp-server "
+IMAGE_INSTALL_append = " openssh openssh-sftp openssh-sftp-server"
 
 # FTP server
-IMAGE_INSTALL_append = " vsftpd "
+IMAGE_INSTALL_append = " vsftpd"
 
 # WvDial
-IMAGE_INSTALL_append = " wvdial "
+IMAGE_INSTALL_append = " wvdial"
 
 # WPA Supplicant
-IMAGE_INSTALL_append = " wpa-supplicant "
+IMAGE_INSTALL_append = " wpa-supplicant"
 
 # hostapd
-IMAGE_INSTALL_append = " hostapd "
+IMAGE_INSTALL_append = " hostapd"
 
 # iptables
-IMAGE_INSTALL_append = " iptables "
+IMAGE_INSTALL_append = " iptables"
 
 # Speedtest CLI
-IMAGE_INSTALL_append = " speedtest-cli "
+IMAGE_INSTALL_append = " speedtest-cli"
 
 # Timezone
-IMAGE_INSTALL_append = " tzcode tzdata "
+IMAGE_INSTALL_append = " tzcode tzdata"
 
 # Parted
-IMAGE_INSTALL_append = " parted "
+IMAGE_INSTALL_append = " parted"
 
 # libembus
-IMAGE_INSTALL_append = " embus "
+IMAGE_INSTALL_append = " embus"
 
 # embusd
-IMAGE_INSTALL_append = " embusd "
+IMAGE_INSTALL_append = " embusd"
 
 # ntfs-3g-ntfsprogs
-IMAGE_INSTALL_append += " ntfs-3g-ntfsprogs "
+IMAGE_INSTALL_append = " ntfs-3g-ntfsprogs"
 
 # Other useful tools
 IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
