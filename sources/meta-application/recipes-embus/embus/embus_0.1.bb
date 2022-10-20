@@ -25,8 +25,10 @@ RDEPENDS_${PN} = "initscripts"
 CONFFILES_${PN} += "${sysconfdir}/init.d/embus.sh"
 
 do_install_append () {
-    install -d ${D}${sysconfdir}/init.d
-    install -m 755 ${WORKDIR}/embus.sh ${D}${sysconfdir}/init.d/embus.sh
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', 'true', 'false', d)}; then
+        install -d ${D}${sysconfdir}/init.d
+        install -m 755 ${WORKDIR}/embus.sh ${D}${sysconfdir}/init.d/embus.sh
+    fi
 }
 
 INSANE_SKIP_${PN}-dev += "dev-elf"

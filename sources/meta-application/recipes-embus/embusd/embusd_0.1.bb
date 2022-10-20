@@ -23,8 +23,10 @@ INITSCRIPT_NAME = "embus"
 INITSCRIPT_PARAMS = "defaults 99"
 
 do_install_append () {
-    install -d ${D}${sysconfdir}/init.d
-    install -m 0755 ${WORKDIR}/embusd.init ${D}${sysconfdir}/init.d/embus
+    if ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', 'true', 'false', d)}; then
+        install -d ${D}${sysconfdir}/init.d
+        install -m 0755 ${WORKDIR}/embusd.init ${D}${sysconfdir}/init.d/embus
+    fi
 }
 
 FILES_${PN} += "/opt"
