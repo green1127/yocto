@@ -9,7 +9,7 @@ SRC_URI = "${URL};branch=${BRANCH} \
            file://embus.sh \
 "
 
-SRCREV = "20fa200b8082ddb7bfe0f4d57aff881b16f12159"
+SRCREV = "248f62ffa59eee3f03d2459faf3d1454c221a85a"
 
 DEPENDS = "zeromq"
 
@@ -24,12 +24,20 @@ INITSCRIPT_PARAMS = "start 89 S ."
 RDEPENDS_${PN} = "initscripts"
 CONFFILES_${PN} += "${sysconfdir}/init.d/embus.sh"
 
+TEST_DIR = "/opt/test"
+
 do_install_append () {
+    install -d ${D}${TEST_DIR}
+    mv ${D}${bindir}/embustest ${D}${TEST_DIR}
+    mv ${D}${bindir}/udstest ${D}${TEST_DIR}
+
     if ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', 'true', 'false', d)}; then
         install -d ${D}${sysconfdir}/init.d
         install -m 755 ${WORKDIR}/embus.sh ${D}${sysconfdir}/init.d/embus.sh
     fi
 }
+
+FILES_${PN} += "${TEST_DIR}/"
 
 INSANE_SKIP_${PN}-dev += "dev-elf"
 INSANE_SKIP_${PN} += "build-deps"
