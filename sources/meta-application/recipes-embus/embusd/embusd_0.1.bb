@@ -9,7 +9,7 @@ SRC_URI = "${URL};branch=${BRANCH} \
            file://embusd.init \
 "
 
-SRCREV = "cc505c4ca7b21f5d7166d1f3b5bf752ff03e6b3e"
+SRCREV = "530519f78bcd56ed9e36c8594fc40d30a79125ec"
 
 DEPENDS = "zeromq jsoncpp spdlog"
 
