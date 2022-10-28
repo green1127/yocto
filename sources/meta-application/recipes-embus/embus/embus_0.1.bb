@@ -9,7 +9,7 @@ SRC_URI = "${URL};branch=${BRANCH} \
            file://embus.sh \
 "
 
-SRCREV = "9856a9a1b97df77c5c7982443d3f924610680294"
+SRCREV = "7ab2dc057a1c9f1fdcf9866e49b0944c321d62e2"
 
 DEPENDS = "zeromq"
 
