@@ -1,0 +1,135 @@
+#! /bin/sh
+DAEMON=/usr/bin/wvdial
+DAEMON_OPTS=hw1
+NAME=wvdial
+DESC=wvdial
+PID_FILE=/run/wvdial.pid
+VENDOR_ID=12d1
+RESET_GPIO_DIR=/sys/class/gpio/gpio29
+
+do_start()
+{
+    echo "starting $DESC..."
+
+    local usb status
+
+    status=0
+    usb=`lsusb | grep $VENDOR_ID` || status=$?
+
+    case $status in
+    0)
+        echo "the device is available."
+        ;;
+    *)
+        echo "resetting the device."
+        do_reset
+        echo "finishing the reset."
+        ;;
+    esac
+
+    start-stop-daemon -b --start --quiet -m --pidfile $PID_FILE \
+        --name $NAME --exec $DAEMON -- $DAEMON_OPTS
+
+    echo "started $DESC..."
+}
+
+do_uptime_test()
+{
+    echo "uptime test..."
+
+    /etc/init.d/ppp0-uptime-test.sh &
+}
+
+do_stop()
+{
+    echo "stopping $DESC..."
+
+    start-stop-daemon -K --quiet --pidfile $PID_FILE \
+        --name $NAME
+
+    echo "stopped $DESC..."
+}
+
+do_gpio()
+{
+    echo out > $RESET_GPIO_DIR/direction
+    echo 1 > $RESET_GPIO_DIR/value
+    echo 0 > $RESET_GPIO_DIR/value
+    echo 1 > $RESET_GPIO_DIR/value
+}
+
+do_restart()
+{
+    echo "restarting $DESC..."
+
+    do_stop
+    sleep 1s
+    do_start
+
+    echo "restarted $DESC..."
+}
+
+do_reset()
+{
+    echo "resetting $DESC..."
+
+    if [ -d "$RESET_GPIO_DIR" ]; then
+        do_gpio
+    else
+        echo 29 > /sys/class/gpio/export
+        do_gpio
+    fi
+
+    for i in {1..10}; do
+        sleep 1s
+        echo -n "."
+    done
+    echo ""
+
+    echo "resetted $DESC..."
+}
+
+do_status()
+{
+    local pid status
+
+    status=0
+    pid=`pidof $NAME` || status=$?
+
+    case $status in
+    0)
+        echo "$DESC is running ($pid)."
+        exit 0
+        ;;
+    *)
+        echo "$DESC is not running." >&2
+        exit $status
+        ;;
+    esac
+}
+
+case "$1" in
+    start)
+        do_start
+        do_uptime_test
+        ;;
+    stop)
+        do_stop
+        ;;
+    restart)
+        do_restart
+        ;;
+    reset)
+        do_reset
+        ;;
+    status)
+        do_status
+        ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "usage: $N { start | stop | restart | reset | status }" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
