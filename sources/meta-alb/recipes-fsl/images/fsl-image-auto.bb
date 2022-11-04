@@ -82,6 +82,9 @@ IMAGE_INSTALL_append = " embusd"
 # ntfs-3g-ntfsprogs
 IMAGE_INSTALL_append = " ntfs-3g-ntfsprogs"
 
+# Binary Log Files
+IMAGE_INSTALL_append = " vector-blf"
+
 # Other useful tools
 IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
 
