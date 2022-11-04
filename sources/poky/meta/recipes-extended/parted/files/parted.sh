@@ -11,9 +11,10 @@ if [ "$state" = "uninitionalized" ]; then
 
     # make part for SSD
     umount /ssdp0
-    parted -s /dev/nvme0n1 mkpart primary ntfs 0 100%
-    mkfs.ntfs -Q /dev/nvme0n1p1
-    mount.ntfs /dev/nvme0n1p1 /ssdp0
+    parted -s /dev/nvme0n1 rm 1
+    parted -s /dev/nvme0n1 mkpart primary ext4 2048s 100%
+    mkfs.ext4 /dev/nvme0n1p1 -Fq
+    mount /dev/nvme0n1p1 /ssdp0
 
     echo "initionalized" > /etc/parted.conf
     exit 0
