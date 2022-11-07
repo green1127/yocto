@@ -1,0 +1,78 @@
+#! /bin/sh
+DAEMON=/usr/bin/logtest
+DAEMON_OPTS=
+NAME=logtest
+DESC=logtest
+PID_FILE=/run/logtest.pid
+
+do_start()
+{
+    echo "starting $DESC..."
+
+    start-stop-daemon -b --start --quiet -m --pidfile $PID_FILE \
+        --name $NAME --exec $DAEMON -- $DAEMON_OPTS
+
+    echo "started $DESC..."
+}
+
+do_stop()
+{
+    echo "stopping $DESC..."
+
+    start-stop-daemon -K --quiet --pidfile $PID_FILE \
+        --name $NAME
+
+    echo "stopped $DESC..."
+}
+
+do_restart()
+{
+    echo "restarting $DESC..."
+
+    do_stop
+    sleep 1s
+    do_start
+
+    echo "restarted $DESC..."
+}
+
+do_status()
+{
+    local pid status
+
+    status=0
+    pid=`pidof $NAME` || status=$?
+
+    case $status in
+    0)
+        echo "$DESC is running ($pid)."
+        exit 0
+        ;;
+    *)
+        echo "$DESC is not running." >&2
+        exit $status
+        ;;
+    esac
+}
+
+case "$1" in
+    start)
+        do_start
+        ;;
+    stop)
+        do_stop
+        ;;
+    restart)
+        do_restart
+        ;;
+    status)
+        do_status
+        ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "usage: $N { start | stop | restart | reset | status }" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

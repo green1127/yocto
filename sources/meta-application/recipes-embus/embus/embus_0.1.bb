@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/libembus.git;protocol=ssh"
 BRANCH ??= "dev-test"
 SRC_URI = "${URL};branch=${BRANCH} \
-           file://embus.sh \
+           file://embus.init \
 "
 
 SRCREV = "7ab2dc057a1c9f1fdcf9866e49b0944c321d62e2"
@@ -19,10 +19,8 @@ inherit cmake
 
 inherit update-rc.d
 
-INITSCRIPT_NAME = "embus.sh"
-INITSCRIPT_PARAMS = "start 89 S ."
-RDEPENDS_${PN} = "initscripts"
-CONFFILES_${PN} += "${sysconfdir}/init.d/embus.sh"
+INITSCRIPT_NAME = "embus"
+INITSCRIPT_PARAMS = "defaults 98"
 
 TEST_DIR = "/opt/test"
 
@@ -33,7 +31,7 @@ do_install_append () {
 
     if ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', 'true', 'false', d)}; then
         install -d ${D}${sysconfdir}/init.d
-        install -m 755 ${WORKDIR}/embus.sh ${D}${sysconfdir}/init.d/embus.sh
+        install -m 755 ${WORKDIR}/embus.init ${D}${sysconfdir}/init.d/embus
     fi
 }
 

@@ -2,15 +2,16 @@
 
 process_name="/opt/embus/bin/embusd"
 process_arg=" --config=/opt/embus/conf/embus.json"
+DESC=embusd
 
 function status()
 {
     procnumber=`ps -ef |grep -w $process_name|grep -v grep|wc -l`
     if [ $procnumber -le 0 ];then
-       echo "embus is not running ..."
+       echo "$DESC is not running ..."
        result=0
     else
-       echo "embus is already running ..."
+       echo "$DESC is already running ..."
        result=1
     fi
     #echo ${result}
@@ -24,20 +25,20 @@ function start()
     then
        return 0
     fi
-    echo "start embus..."
+    echo "start $DESC..."
    # echo "nameserver 8.8.8.8" > /etc/resolv.conf
     nohup $process_name $process_arg 2>&1 &
-    echo "start embus successful!"
+    echo "start $DESC successful!"
     return 0
 }
 
 # 添加停止命令
 function stop(){
-    echo "stop embus ..."
+    echo "stop $DESC..."
 
     ps aux |grep $process_name |grep -v grep |awk '{print "kill -9 " $2}'|sh
 
-    echo "stop embus successful!"
+    echo "stop $DESC successful!"
     return 0
 }
 

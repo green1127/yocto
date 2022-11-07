@@ -19,13 +19,13 @@ inherit cmake
 
 inherit update-rc.d
 
-INITSCRIPT_NAME = "embus"
+INITSCRIPT_NAME = "embusd"
 INITSCRIPT_PARAMS = "defaults 99"
 
 do_install_append () {
     if ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', 'true', 'false', d)}; then
         install -d ${D}${sysconfdir}/init.d
-        install -m 0755 ${WORKDIR}/embusd.init ${D}${sysconfdir}/init.d/embus
+        install -m 0755 ${WORKDIR}/embusd.init ${D}${sysconfdir}/init.d/embusd
     fi
 }
 
