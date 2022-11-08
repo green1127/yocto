@@ -4,7 +4,7 @@ SECTION = "base"
 PR = "r89"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://licenses/GPL-2;md5=94d55d512a9ba36caa9b7df079bae19f"
-# Removed all license related tasks in this recipe as license.bbclass 
+# Removed all license related tasks in this recipe as license.bbclass
 # now deals with this. In order to get accurate licensing on to the image:
 # Set COPY_LIC_MANIFEST to just copy just the license.manifest to the image
 # For the manifest and the license text for each package:
@@ -65,7 +65,8 @@ conffiles = "${sysconfdir}/debian_version ${sysconfdir}/host.conf \
 #
 # The hostname can be changed outside of this recipe by using
 # hostname_pn-base-files = "my-host-name".
-hostname = "${MACHINE}"
+# hostname = "${MACHINE}"
+hostname = "rmu7"
 
 BASEFILESISSUEINSTALL ?= "do_install_basefilesissue"
 
@@ -76,7 +77,7 @@ BASEFILESISSUEINSTALL ?= "do_install_basefilesissue"
 # need to remove the symbolic links first before we create the directories.
 # Otherwise the directory creation will fail and we will have circular symbolic
 # links.
-# 
+#
 pkg_preinst_${PN} () {
     #!/bin/sh -e
     if [ x"$D" = "x" ]; then
@@ -89,7 +90,7 @@ pkg_preinst_${PN} () {
             # Remove the symbolic link
             rm -f /run
         fi
-    fi     
+    fi
 }
 
 do_install () {
