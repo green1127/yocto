@@ -26,7 +26,8 @@ function start()
        return 0
     fi
     echo "start $DESC..."
-   # echo "nameserver 8.8.8.8" > /etc/resolv.conf
+    echo "2" > /proc/irq/22/smp_affinity
+    # echo "nameserver 8.8.8.8" > /etc/resolv.conf
     nohup $process_name $process_arg 2>&1 &
     echo "start $DESC successful!"
     return 0
