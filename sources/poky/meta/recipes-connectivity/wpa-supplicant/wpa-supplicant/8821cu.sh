@@ -9,21 +9,21 @@ echo "enable gpio for doip line"
 echo 39 > /sys/class/gpio/export
 echo out > /sys/class/gpio/gpio39/direction
 
+# load the Wi-Fi ko file
+echo "load 8821cu.ko"
+insmod /lib/modules/5.10.41-rt42+gb5dbd57c1cb2/kernel/drivers/net/wireless/realtek/rtl8821cu/8821cu.ko
+
 echo "8821cu CHIP_EN"
-cd /sys/class/gpio/
-echo 89 > export
-cd gpio89
-echo out > direction
-echo 0 > value
-echo 1 > value
+echo 89 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio89/direction
+echo 0 > /sys/class/gpio/gpio89/value
+echo 1 > /sys/class/gpio/gpio89/value
 
 echo "8821cu WL_DIS"
-cd /sys/class/gpio/
-echo 90 > export
-cd gpio90
-echo out > direction
-echo 0 > value
-echo 1 > value
+echo 90 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio90/direction
+echo 0 > /sys/class/gpio/gpio90/value
+echo 1 > /sys/class/gpio/gpio90/value
 
 echo "8821cu done"
 
