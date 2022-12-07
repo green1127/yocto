@@ -5,10 +5,6 @@ echo out > /sys/class/gpio/gpio23/direction
 echo 0 > /sys/class/gpio/gpio23/value
 echo 1 > /sys/class/gpio/gpio23/value
 
-echo "enable gpio for doip line"
-echo 39 > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio39/direction
-
 # load the Wi-Fi ko file
 echo "load 8821cu.ko"
 insmod /lib/modules/5.10.41-rt42+gb5dbd57c1cb2/kernel/drivers/net/wireless/realtek/rtl8821cu/8821cu.ko
