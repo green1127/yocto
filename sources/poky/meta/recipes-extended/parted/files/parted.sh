@@ -4,10 +4,15 @@ if [ "$state" = "uninitionalized" ]; then
     # resize part for root directory
     parted -s /dev/mmcblk0 resizepart 2 1222MB
     resize2fs /dev/mmcblk0p2
+
+    parted -s /dev/mmcblk0 mkpart extended 1222MB 100%
+    parted -s /dev/mmcblk0 mkpart logic fat32 1222MB 1288MB
+    parted -s /dev/mmcblk0 mkpart logic ext4 1288mB 2510MB
+
     # make part for the remaining space
-    parted -s /dev/mmcblk0 mkpart primary fat32 1222MB 100%
-    mkdosfs /dev/mmcblk0p3
-    mount /dev/mmcblk0p3 /data
+    parted -s /dev/mmcblk0 mkpart logic fat32 2550MB 100%
+    mkdosfs /dev/mmcblk0p7
+#    mount /dev/mmcblk0p7 /data
 
     # make part for SSD
     umount /ssdp0
