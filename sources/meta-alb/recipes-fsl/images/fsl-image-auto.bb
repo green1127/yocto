@@ -92,3 +92,6 @@ IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
 PCIE_INSTALL_PACKAGES ?= " demo-pcie-shared-mem demo-virt-eth"
 IMAGE_INSTALL_append = "${@bb.utils.contains('DISTRO_FEATURES', 'pcie-demos-support', ' ${PCIE_INSTALL_PACKAGES}', '', d)}"
 
+
+# vnet
+IMAGE_INSTALL_append = " vnet-mod"
