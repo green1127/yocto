@@ -95,3 +95,6 @@ IMAGE_INSTALL_append = "${@bb.utils.contains('DISTRO_FEATURES', 'pcie-demos-supp
 
 # vnet
 IMAGE_INSTALL_append = " vnet-mod"
+
+# ota
+IMAGE_INSTALL_append = " ota"
