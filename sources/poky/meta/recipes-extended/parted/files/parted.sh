@@ -9,6 +9,9 @@ if [ "$state" = "uninitionalized" ]; then
     parted -s /dev/mmcblk0 mkpart logic fat32 1222MB 1288MB
     parted -s /dev/mmcblk0 mkpart logic ext4 1288mB 2510MB
 
+    mkdosfs /dev/mmcblk0p5
+    mkfs.ext4 /dev/mmcblk0p6 -Fq
+
     # make part for the remaining space
     parted -s /dev/mmcblk0 mkpart logic fat32 2550MB 100%
     mkdosfs /dev/mmcblk0p7
