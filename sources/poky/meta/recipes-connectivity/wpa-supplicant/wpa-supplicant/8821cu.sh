@@ -24,7 +24,7 @@ echo 1 > /sys/class/gpio/gpio90/value
 echo "8821cu done"
 
 echo "load sja1105.ko"
-insmod /lib/modules/5.10.41-rt42+gb5dbd57c1cb2/kernel/drivers/spi/sja1105pqrs.ko
+insmod /lib/modules/$(uname -r)/kernel/drivers/spi/sja1105pqrs.ko
 
 COUNT_MAX=60
 
