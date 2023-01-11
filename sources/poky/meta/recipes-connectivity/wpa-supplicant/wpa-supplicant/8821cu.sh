@@ -1,4 +1,8 @@
 #!/bin/sh
+
+emota A check
+emota M check
+
 echo "enable gpio for pfe0"
 echo 23 > /sys/class/gpio/export
 echo out > /sys/class/gpio/gpio23/direction
