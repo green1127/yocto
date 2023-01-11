@@ -9,7 +9,7 @@ SRC_URI = "${URL};branch=${BRANCH} \
            file://embus.init \
 "
 
-SRCREV = "2fbda61b14231336a47f5eb01d7021086a360c81"
+SRCREV = "81728ca9584fde591d3952edcaefd042ca0b1083"
 
 DEPENDS = "zeromq"
 
@@ -22,12 +22,11 @@ inherit update-rc.d
 INITSCRIPT_NAME = "embus"
 INITSCRIPT_PARAMS = "defaults 98"
 
-TEST_DIR = "/opt/test"
 
 do_install_append () {
-    install -d ${D}${TEST_DIR}
-    mv ${D}${bindir}/embustest ${D}${TEST_DIR}
-    mv ${D}${bindir}/udstest ${D}${TEST_DIR}
+    install -d ${D}${bindir}
+   # mv ${D}${bindir}/embustest ${D}${TEST_DIR}
+   # mv ${D}${bindir}/udstest ${D}${TEST_DIR}
 
     if ${@bb.utils.contains('DISTRO_FEATURES', 'sysvinit', 'true', 'false', d)}; then
         install -d ${D}${sysconfdir}/init.d
@@ -35,7 +34,7 @@ do_install_append () {
     fi
 }
 
-FILES_${PN} += "${TEST_DIR}/"
+FILES_${PN} += "${bindir}/"
 
 INSANE_SKIP_${PN}-dev += "dev-elf"
 INSANE_SKIP_${PN} += "build-deps"
