@@ -14,12 +14,12 @@ NXP_FIRMWARE_LOCAL_DIR ?= "."
 PFE_FW_CLASS_BIN ?= "s32g_pfe_class.fw"
 PFE_FW_UTIL_BIN ?= "s32g_pfe_util.fw"
 
-URL ?= "git://source.codeaurora.cn/external/autobsps32/extra/pfeng;protocol=https"
+URL ?= "git://github.com/nxp-auto-linux/pfeng;protocol=https;nobranch=1"
 SRC_URI = "${URL} \
 	file://${NXP_FIRMWARE_LOCAL_DIR}/${PFE_FW_CLASS_BIN} \
 	file://${NXP_FIRMWARE_LOCAL_DIR}/${PFE_FW_UTIL_BIN} \
 	"
-SRCREV ?= "e5747c79469580515871006c79719f506d828ebc"
+SRCREV ?= "5ab0455434f7bf5a59d4bfb693b2a1ee6c801886"
 
 # Tell yocto not to bother stripping our binaries, especially the firmware
 INHIBIT_PACKAGE_STRIP_FILES = "\
