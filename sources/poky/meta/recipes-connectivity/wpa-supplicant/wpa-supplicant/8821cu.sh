@@ -9,6 +9,17 @@ echo out > /sys/class/gpio/gpio23/direction
 echo 0 > /sys/class/gpio/gpio23/value
 echo 1 > /sys/class/gpio/gpio23/value
 
+echo "enable gpio for button input"
+echo 81 > /sys/class/gpio/export
+echo in > /sys/class/gpio/gpio81/direction
+
+#ifconfig pfe0 down
+#ifconfig pfe0 hw ether 00:01:be:be:ef:01
+#ifconfig pfe0 up
+
+route add default gw 192.168.10.1
+route add -net 224.0.0.0 netmask 224.0.0.0 dev pfe0
+
 # load the Wi-Fi ko file
 echo "load 8821cu.ko"
 insmod /lib/modules/5.10.41-rt42+gb5dbd57c1cb2/kernel/drivers/net/wireless/realtek/rtl8821cu/8821cu.ko
