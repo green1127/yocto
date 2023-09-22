@@ -1,13 +1,13 @@
 DESCRIPTION = "LibFCI Example: Command line tool for configuration of PFE"
 HOMEPAGE = "https://source.codeaurora.org/external/autobsps32/extra/pfeng"
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://LICENSE-BSD3.txt;md5=bc7033361a6aa05f0fd2c1690eb81fd1"
+LIC_FILES_CHKSUM = "file://LICENSE-BSD3.txt;md5=6b674f4e7c2e72a1907ad7a7f03b800c"
 
 PR = "r0"
 
-URL ?= "git://source.codeaurora.cn/external/autobsps32/extra/pfeng;protocol=https"
+URL ?= "git://github.com/nxp-auto-linux/pfeng;protocol=https;nobranch=1"
 SRC_URI = "${URL}"
-SRCREV = "e5747c79469580515871006c79719f506d828ebc"
+SRCREV = "5ab0455434f7bf5a59d4bfb693b2a1ee6c801886"
 
 S = "${WORKDIR}/git"
 MDIR = "${S}/sw/libfci_cli"
@@ -38,4 +38,4 @@ do_install() {
 	install -m 0755 ${MDIR}/libfci_cli ${D}${bindir}
 }
 
-COMPATIBLE_MACHINE = "s32g2"
+COMPATIBLE_MACHINE = "s32g"
