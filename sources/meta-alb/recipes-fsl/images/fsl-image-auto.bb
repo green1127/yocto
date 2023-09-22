@@ -86,7 +86,7 @@ IMAGE_INSTALL_append = " ntfs-3g-ntfsprogs"
 IMAGE_INSTALL_append = " vector-blf"
 
 # Other useful tools
-IMAGE_INSTALL_append = " rsync irqbalance i2c-tools"
+IMAGE_INSTALL_append = " rsync irqbalance i2c-tools linuxptp "
 
 # PCIe demos and test apps
 PCIE_INSTALL_PACKAGES ?= " demo-pcie-shared-mem demo-virt-eth"
@@ -98,3 +98,6 @@ IMAGE_INSTALL_append = " vnet-mod"
 
 # ota
 IMAGE_INSTALL_append = " ota"
+
+# vlan
+IMAGE_INSTALL_append = " vlan "
