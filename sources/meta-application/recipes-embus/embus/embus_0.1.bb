@@ -9,7 +9,7 @@ SRC_URI = "${URL};branch=${BRANCH} \
            file://embus.init \
 "
 
-SRCREV = "c8a494658890e0b2620ba87bde61f0281f67c66b"
+SRCREV = "69fa61bd0e595e78b65311de83c9de5ef7656f4e"
 
 DEPENDS = "zeromq"
 
@@ -38,3 +38,4 @@ FILES_${PN} += "${bindir}/"
 
 INSANE_SKIP_${PN}-dev += "dev-elf"
 INSANE_SKIP_${PN} += "build-deps"
+INSANE_SKIP_${PN} += "file-rdeps"

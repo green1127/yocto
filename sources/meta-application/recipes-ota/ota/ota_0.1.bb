@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/ota.git;protocol=ssh"
 BRANCH ??= "dev"
 SRC_URI = "${URL};branch=${BRANCH}"
-SRCREV = "7ba50ba275164e16860841693b041506664bbf4f"
+SRCREV = "13bb4718ba46db930cbcdcd2535ac7a1923fd9e1"
 
 
 S = "${WORKDIR}/git"
