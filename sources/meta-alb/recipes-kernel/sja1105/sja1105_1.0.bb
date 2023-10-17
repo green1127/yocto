@@ -12,7 +12,7 @@ URL ?= "git://git@gitlab.enjoymove.cn/rmu-linux/sja1105x.git;protocol=ssh"
 BRANCH ??= "dev"
 SRC_URI = "${URL};branch=${BRANCH}"
 # SRCREV = "573ecec64167cf01e4e8451734f92382952f772c"
-SRCREV = "75f3931145fb1287e78c18a9388569fce0dba77f"
+SRCREV = "796a1b4b0628a0b3f620b370b17ec7e3f0c34bcf"
 
 KERNEL_NAME = "${PREFERRED_PROVIDER_virtual/kernel}"
 KERNEL_VER = '${@d.getVar("PREFERRED_VERSION_${KERNEL_NAME}",True)}'
@@ -26,6 +26,9 @@ include ${OTHER_KERNEL_INCLUDE}
 S = "${WORKDIR}/git"
 DESTDIR = "${D}"
 EXTRA_OEMAKE_append = " INSTALL_DIR=${DESTDIR} KERNELDIR=${KBUILD_OUTPUT} MYCOMPILER=${CROSS_COMPILE}gcc "
+
+MODULES_MODULE_SYMVERS_LOCATION = "."
+
 EXTRA_OEMAKE_append_s32v234evb = " MYPLATFORM=evb "
 EXTRA_OEMAKE_append_s32v234bbmini = " MYPLATFORM=bbmini "
 EXTRA_OEMAKE_append_s32g2evb = " MYPLATFORM=gplat "
@@ -39,6 +42,9 @@ FILES_${PN} += "${sysconfdir}/modules-load.d/*"
 
 PROVIDES = "kernel-module-sja1105pqrs${KERNEL_MODULE_PACKAGE_SUFFIX}"
 RPROVIDES_${PN} = "kernel-module-sja1105pqrs${KERNEL_MODULE_PACKAGE_SUFFIX}"
+
+PROVIDES += "kernel-module-sw1105dev${KERNEL_MODULE_PACKAGE_SUFFIX}"
+RPROVIDES_${PN} += "kernel-module-sw1105dev${KERNEL_MODULE_PACKAGE_SUFFIX}"
 
 COMPATIBLE_MACHINE = "s32v234evb|s32v234bbmini|s32g2evb|s32g274ardb"
 INHIBIT_PACKAGE_STRIP = "1"

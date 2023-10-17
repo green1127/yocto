@@ -41,6 +41,9 @@ echo "8821cu done"
 echo "load sja1105.ko"
 insmod /lib/modules/$(uname -r)/kernel/drivers/spi/sja1105pqrs.ko
 
+echo "load sw1105dev.ko"
+insmod /lib/modules/$(uname -r)/kernel/drivers/spi/sw1105dev.ko
+
 COUNT_MAX=60
 
 received="0"
