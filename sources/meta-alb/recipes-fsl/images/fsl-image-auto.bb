@@ -101,3 +101,6 @@ IMAGE_INSTALL_append = " ota"
 
 # vlan
 IMAGE_INSTALL_append = " vlan "
+
+# libxlsxwriter
+IMAGE_INSTALL_append = " libxlsxwriter "
