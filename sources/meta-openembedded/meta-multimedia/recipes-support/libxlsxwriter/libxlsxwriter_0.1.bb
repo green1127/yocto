@@ -27,7 +27,7 @@ do_install_append() {
        ln -sf  libxlsxwriter.so.5  libxlsxwriter.so
 }
 
-FILES_${PN} +="${libdir}/*.so"
-
-FILES_${PN}-dev +="${libdir}/*.so"
-
+FILES_${PN} += "${libdir}/*.so"
+FILES_${PN}-dbg += "${libdir}/.debug"
+FILES_SOLIBSDEV = ""
+INSANE_SKIP_${PN} = "dev-so"
